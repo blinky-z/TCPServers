@@ -52,11 +52,11 @@ void startServer() {
     }
 
     printf("Waiting for connections on PORT %d\n", PORT);
-    acceptConnections();
 }
 
 int main() {
     startServer();
+    acceptConnections();
 
     return 0;
 }
