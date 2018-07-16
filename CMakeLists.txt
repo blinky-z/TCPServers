@@ -6,7 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 
 add_executable(SocketLearn
 #        blocking i/o server
-        StartBlockServer.cpp
+        StartBlockingServer.cpp
 #        non-blocking i/o servers
 #        select server
         StartNonBlockingServer.cpp

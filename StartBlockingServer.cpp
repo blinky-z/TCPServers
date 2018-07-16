@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-int listenerSocket;
+int masterSocket;
 const unsigned short int PORT = 8080;
 const unsigned int backlog = 30;
 
@@ -23,13 +23,13 @@ void handle_client(int sockfd) {
 
 void acceptConnections() {
     while (true) {
-        int clSocket = accept(listenerSocket, nullptr, nullptr);
-        handle_client(clSocket);
+        int new_fd = accept(masterSocket, nullptr, nullptr);
+        handle_client(new_fd);
     }
 }
 
 void startServer() {
-    if ((listenerSocket = socket(AF_INET, SOCK_STREAM, 0)) != -1) {
+    if ((masterSocket = socket(AF_INET, SOCK_STREAM, 0)) != -1) {
         std::cout << "Server side listener socket has been created" << std::endl;
     } else {
         throw std::runtime_error("Unable to create server listener socket");
@@ -41,13 +41,13 @@ void startServer() {
     serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 
     int reuseAddr = 1;
-    setsockopt(listenerSocket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
+    setsockopt(masterSocket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
 
-    if ((bind(listenerSocket, (struct sockaddr*) &serverAddress, sizeof(serverAddress)) == -1)) {
+    if ((bind(masterSocket, (struct sockaddr*) &serverAddress, sizeof(serverAddress)) == -1)) {
         throw std::runtime_error("[Server] Binding failed");
     }
 
-    if ((listen(listenerSocket, backlog)) == -1) {
+    if ((listen(masterSocket, backlog)) == -1) {
         throw std::runtime_error("[Server] Listening failed");
     }
 
