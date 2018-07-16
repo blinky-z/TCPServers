@@ -29,10 +29,7 @@ int find_max_fd(int masterSocket, const set<int>& fdSockets) {
     }
 }
 
-int main() {
-    int masterSocket = socket(AF_INET, SOCK_STREAM, 0);
-    set<int> clientSockets;
-
+void startServer(int masterSocket) {
     struct sockaddr_in sockAddr;
     sockAddr.sin_family = AF_INET;
     sockAddr.sin_port = htons(PORT);
@@ -51,6 +48,13 @@ int main() {
     }
 
     printf("Waiting for connections on PORT %d\n", PORT);
+}
+
+int main() {
+    int masterSocket = socket(AF_INET, SOCK_STREAM, 0);
+    startServer(masterSocket);
+
+    set<int> clientSockets;
 
     while (true) {
         fd_set workSockets;
