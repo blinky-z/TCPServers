@@ -74,7 +74,7 @@ int main() {
                 memset(&readBuffer, '\0', sizeof(readBuffer));
                 int recvSize = recv(*currentSock, &readBuffer, sizeof(readBuffer) - 1, MSG_NOSIGNAL);
 
-                if (recvSize == 0 && errno != EAGAIN) {
+                if ((recvSize == 0) && (errno != EAGAIN)) {
                     shutdown(*currentSock, SHUT_RDWR);
                     close(*currentSock);
                     clientSockets.erase(currentSock);

@@ -76,7 +76,7 @@ int main() {
                     int recvSize = recv(workSockets[currentWorkSocket].fd, &readBuffer, sizeof(readBuffer) - 1,
                                         MSG_NOSIGNAL);
 
-                    if (recvSize == 0 && errno != EAGAIN) {
+                    if ((recvSize == 0) && (errno != EAGAIN)) {
                         shutdown(workSockets[currentWorkSocket].fd, SHUT_RDWR);
                         close(workSockets[currentWorkSocket].fd);
                         clientSockets.erase(workSockets[currentWorkSocket].fd);
