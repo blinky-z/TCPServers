@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <set>
 #include <algorithm>
 
@@ -7,8 +8,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
-#include <cstring>
-#include <poll.h>
 
 using namespace std;
 
