@@ -18,10 +18,10 @@ add_executable(SocketLearn
 #        epoll server
 #        StartEpollServer.cpp
 #        chat server with using of select
-#        ChatServer.cpp
+#        ChatSelectServer.cpp
 #        echo server written with using of libevent library
 #        pass -levent param to target_ling_libraries()
-        echoLibeventServer.cpp
+        EchoLibeventServer.cpp
         )
 
 target_link_libraries(SocketLearn)
