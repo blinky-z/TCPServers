@@ -13,7 +13,6 @@ using namespace std;
 
 const unsigned short int PORT = 8080;
 const unsigned int BACKLOG = 30;
-const unsigned int POLL_SIZE = 1024;
 
 int set_nonblock(int sockfd) {
     const int flags = fcntl(sockfd, F_GETFL, 0);
