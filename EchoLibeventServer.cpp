@@ -2,7 +2,6 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include <string>
 #include <cerrno>
 
 #include <event2/listener.h>
@@ -55,33 +54,27 @@ void accept_error_cb(struct evconnlistener* listener, void* ctx) {
 }
 
 int main(int argc, char* argv[]) {
-    const char** methods = event_get_supported_methods();
-    printf("Starting Libevent %s.  Available methods are:\n", event_get_version());
-    for (int currentMethodIndex = 0; methods[currentMethodIndex] != NULL; ++currentMethodIndex) {
-        printf("    %s\n", methods[currentMethodIndex]);
-    }
-    std::cout << std::endl;
-
     struct event_base* base;
 
-    unsigned short int port = std::stoi(argv[1]);
-    std::string backendMethod = argv[2];
+    const unsigned short int PORT = std::atoi(argv[1]);
+    const char* backendMethod = argv[2];
+
     struct sockaddr_in sockAddr;
     sockAddr.sin_family = AF_INET;
-    sockAddr.sin_port = htons(port);
+    sockAddr.sin_port = htons(PORT);
     sockAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     struct event_config* cfg = event_config_new();
 
-    if (backendMethod == "select") {
+    if (strcmp(backendMethod, "select") == 0) {
         event_config_avoid_method(cfg, "poll");
         event_config_avoid_method(cfg, "epoll");
     }
-    if (backendMethod == "poll") {
+    else if (strcmp(backendMethod, "poll") == 0) {
         event_config_avoid_method(cfg, "select");
         event_config_avoid_method(cfg, "epoll");
     }
-    if (backendMethod == "epoll") {
+    else {
         event_config_avoid_method(cfg, "select");
         event_config_avoid_method(cfg, "poll");
     }
@@ -100,7 +93,7 @@ int main(int argc, char* argv[]) {
                                                               LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE, -1,
                                                               (struct sockaddr*) &sockAddr, sizeof(sockAddr));
 
-    std::cout << "EvListener listens on PORT " << port << std::endl;
+    std::cout << "EvListener listens on PORT " << PORT << std::endl;
 
     evconnlistener_set_error_cb(listener, accept_error_cb);
 

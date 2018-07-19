@@ -1,8 +1,9 @@
-#include <stdio.h>
+#include <cstdio>
 #include <cstring>
 
 #include <ev.h>
 #include <netinet/in.h>
+#include <cstdlib>
 
 void read_cb(struct ev_loop* loop, struct ev_io* watcher, int revents) {
     char buffer[1024];
@@ -30,8 +31,24 @@ void accept_cb(struct ev_loop* loop, struct ev_io* watcher, int revents) {
     ev_io_start(loop, client_watcher);
 }
 
-int main() {
-    struct ev_loop* loop = ev_default_loop(0);
+int main(int argc, char* argv[]) {
+    struct ev_loop* loop;
+
+    const unsigned short int PORT = std::atoi(argv[1]);
+    const char* backendMethod = argv[2];
+
+    printf("%s\n", backendMethod);
+    printf("    length: %zu\n", strlen(backendMethod));
+
+    if (strcmp(backendMethod, "select") == 0) {
+        loop = ev_default_loop(EVBACKEND_SELECT);
+    }
+    else if (strcmp(backendMethod, "poll") == 0) {
+        loop = ev_default_loop(EVBACKEND_POLL);
+    }
+    else {
+        loop = ev_default_loop(EVBACKEND_EPOLL);
+    }
 
     int listenerSocket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -41,15 +58,16 @@ int main() {
     struct sockaddr_in listenerSockAddr;
     memset(&listenerSockAddr, 0, sizeof(listenerSockAddr));
     listenerSockAddr.sin_family = AF_INET;
-    listenerSockAddr.sin_port = htons(8080);
+    listenerSockAddr.sin_port = htons(PORT);
     listenerSockAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     bind(listenerSocket, (struct sockaddr*) &listenerSockAddr, sizeof(listenerSockAddr));
     listen(listenerSocket, SOMAXCONN);
 
-    // accept watcher
+    // accepting watcher
     struct ev_io w_accept;
     ev_io_init(&w_accept, accept_cb, listenerSocket, EV_READ);
+
     ev_io_start(loop, &w_accept);
 
     ev_loop(loop, 0);
