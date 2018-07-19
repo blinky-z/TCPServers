@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
@@ -10,7 +11,6 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <iostream>
 
 void echo_read_cb(struct bufferevent* bev, void* ctx) {
     struct evbuffer* input = bufferevent_get_input(bev);
@@ -57,8 +57,8 @@ void accept_error_cb(struct evconnlistener* listener, void* ctx) {
 int main(int argc, char* argv[]) {
     const char** methods = event_get_supported_methods();
     printf("Starting Libevent %s.  Available methods are:\n", event_get_version());
-    for (int i = 0; methods[i] != NULL; ++i) {
-        printf("    %s\n", methods[i]);
+    for (int currentMethodIndex = 0; methods[currentMethodIndex] != NULL; ++currentMethodIndex) {
+        printf("    %s\n", methods[currentMethodIndex]);
     }
     std::cout << std::endl;
 
