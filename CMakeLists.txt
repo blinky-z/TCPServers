@@ -32,4 +32,4 @@ add_executable(SocketLearn
 #        EchoLibevServer.cpp
         )
 
-target_link_libraries(SocketLearn ev)
+target_link_libraries(SocketLearn)
