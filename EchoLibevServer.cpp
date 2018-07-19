@@ -1,9 +1,9 @@
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 #include <ev.h>
 #include <netinet/in.h>
-#include <cstdlib>
 
 void read_cb(struct ev_loop* loop, struct ev_io* watcher, int revents) {
     char buffer[1024];
@@ -37,16 +37,11 @@ int main(int argc, char* argv[]) {
     const unsigned short int PORT = std::atoi(argv[1]);
     const char* backendMethod = argv[2];
 
-    printf("%s\n", backendMethod);
-    printf("    length: %zu\n", strlen(backendMethod));
-
     if (strcmp(backendMethod, "select") == 0) {
         loop = ev_default_loop(EVBACKEND_SELECT);
-    }
-    else if (strcmp(backendMethod, "poll") == 0) {
+    } else if (strcmp(backendMethod, "poll") == 0) {
         loop = ev_default_loop(EVBACKEND_POLL);
-    }
-    else {
+    } else {
         loop = ev_default_loop(EVBACKEND_EPOLL);
     }
 
