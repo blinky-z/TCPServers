@@ -130,7 +130,7 @@ sudo apt-get install libevent-dev
 1) **Скомпилируйте сервер** :
 
 ```bash
-g++ echoLibeventServer.cpp -levent -o EchoServer
+g++ EchoLibeventServer.cpp -levent -o EchoServer
 ```
 
 2) **Запустите его, передав следующие аргументы:**
@@ -180,7 +180,7 @@ sudo apt-get install libev-dev
 1) **Скомпилируйте сервер** :
 
 ```bash
-g++ echoLibevServer.cpp -lev -o EchoServer
+g++ EchoLibevServer.cpp -lev -o EchoServer
 ```
 
 2) **Запустите его, передав следующие аргументы:**
