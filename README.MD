@@ -123,7 +123,7 @@ sudo apt-get install libevent-dev
 
 #### Пример echo сервера
 
-Пример echo сервера, использующего библиотеку *libevent*, показан в файле [echoLibeventServer.cpp](https://github.com/blinky-z/TCPServers/blob/master/echoLibeventServer.cpp)
+Пример echo сервера, использующего библиотеку *libevent*, показан в файле [EchoLibeventServer.cpp](https://github.com/blinky-z/TCPServers/blob/master/EchoLibeventServer.cpp)
 
 **Запуск сервера:**
 
@@ -173,7 +173,7 @@ sudo apt-get install libev-dev
 
 #### Пример echo сервера
 
-Пример echo сервера, использующего библиотеку *libev*, показан в файле [echoLibevServer.cpp](https://github.com/blinky-z/TCPServers/blob/master/EchoLibevServer.cpp)
+Пример echo сервера, использующего библиотеку *libev*, показан в файле [EchoLibevServer.cpp](https://github.com/blinky-z/TCPServers/blob/master/EchoLibevServer.cpp)
 
 **Запуск сервера:**
 
